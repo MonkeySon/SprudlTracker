@@ -22,7 +22,16 @@ eControlCfg = cfg['eControl']
 iqCardCfg   = cfg['iqCard']
 influxDBCfg = cfg['influxDB']
 
-fuelPoints = EControlParser.parse(eControlCfg)
-fuelPoints += IqCardParser.parse(iqCardCfg)
+fuelPoints = []
 
-InfluxDBConnector.write_points(influxDBCfg, fuelPoints)
+if eControlCfg['enabled'] == True:
+    fuelPoints += EControlParser.parse(eControlCfg)
+
+if iqCardCfg['enabled'] == True:
+    fuelPoints += IqCardParser.parse(iqCardCfg)
+
+if influxDBCfg['enabled'] == True:
+    if len(fuelPoints) > 0:
+        InfluxDBConnector.write_points(influxDBCfg, fuelPoints)
+    else:
+        print('WARNING: No fuel points collected!')

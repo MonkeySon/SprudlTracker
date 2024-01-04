@@ -1,5 +1,6 @@
 {
     "eControl": {
+        "enabled": true,
         "endpoint": "https://api.e-control.at/sprit/1.0/search/gas-stations/by-address",
         "fuelTypes": [
             "SUP",
@@ -50,10 +51,12 @@
         ]
     },
     "iqCard": {
+        "enabled": true,
         "username": "",
         "password": ""
     },
     "influxDB": {
+        "enabled": true,
         "url": "",
         "token": "",
         "org": "",
