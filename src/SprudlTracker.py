@@ -2,9 +2,13 @@ import json
 import sys
 import traceback
 
+import MailifierUtil
 import EControlParser
 import IqCardParser
 import InfluxDBConnector
+
+MAILIFIER_ENABLE = True
+MAILIFIER_TAG = 'SprudlTracker'
 
 CONFIG_FILE_NAME = 'config.json'
 
@@ -22,6 +26,8 @@ try:
 except Exception as e:
     print('Exception while opening config file:', e)
     print(traceback.format_exc())
+    if MAILIFIER_ENABLE:
+        MailifierUtil.mailify_exception(MAILIFIER_TAG, 'Exception while opening config')
 
 eControlCfg = cfg['eControl']
 iqCardCfg   = cfg['iqCard']
@@ -35,6 +41,8 @@ try:
 except Exception as e:
     print('Exception while parsing E-Control:', e)
     print(traceback.format_exc())
+    if MAILIFIER_ENABLE:
+        MailifierUtil.mailify_exception(MAILIFIER_TAG, 'Exception E-Control parsing')
 
 try:
     if iqCardCfg['enabled'] == True:
@@ -42,6 +50,8 @@ try:
 except Exception as e:
     print('Exception while parsing IQ Card:', e)
     print(traceback.format_exc())
+    if MAILIFIER_ENABLE:
+        MailifierUtil.mailify_exception(MAILIFIER_TAG, 'Exception IQ Card parsing')
 
 try:
     if influxDBCfg['enabled'] == True:
@@ -52,3 +62,5 @@ try:
 except Exception as e:
     print('Exception while writing points to InfluxDB:', e)
     print(traceback.format_exc())
+    if MAILIFIER_ENABLE:
+        MailifierUtil.mailify_exception(MAILIFIER_TAG, 'Exception InfluxDB writing')
