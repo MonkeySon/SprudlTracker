@@ -3,7 +3,7 @@ Description=Regularly run SprudlTracker
 
 [Timer]
 OnBootSec=2min
-OnCalendar=*-*-* 03/4:30:00
+OnCalendar=*-*-* 01/2:30:00
 Unit=sprudltracker.service
 
 [Install]
