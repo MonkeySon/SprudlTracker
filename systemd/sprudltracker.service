@@ -1,0 +1,10 @@
+[Unit]
+Description=SprudlTracker to track gasoline prices in Austria
+
+[Service]
+WorkingDirectory={WORKDIR}
+ExecStart=/usr/bin/python3 {WORKDIR}SprudlTracker.py
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
