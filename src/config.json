@@ -1,0 +1,63 @@
+{
+    "eControl": {
+        "endpoint": "https://api.e-control.at/sprit/1.0/search/gas-stations/by-address",
+        "fuelTypes": [
+            "SUP",
+            "DIE"
+        ],
+        "includeClosed": true,
+        "locations": [
+            {
+                "name": "Salzburg",
+                "lat": 47.805416,
+                "lon": 13.041716
+            },
+            {
+                "name": "Innsbruck",
+                "lat": 47.265485,
+                "lon": 11.395311
+            },
+            {
+                "name": "Bregenz",
+                "lat": 47.502388,
+                "lon": 9.746847
+            },
+            {
+                "name": "Linz",
+                "lat": 48.305777,
+                "lon": 14.286518
+            },
+            {
+                "name": "Klagenfurt",
+                "lat": 46.624891,
+                "lon": 14.308448
+            },
+            {
+                "name": "Graz",
+                "lat": 47.069625,
+                "lon": 15.440383
+            },
+            {
+                "name": "Eisenstadt",
+                "lat": 47.846575,
+                "lon": 16.526871
+            },
+            {
+                "name": "Wien",
+                "lat": 48.208431,
+                "lon": 16.371775
+            }
+        ]
+    },
+    "iqCard": {
+        "username": "",
+        "password": ""
+    },
+    "influxDB": {
+        "url": "",
+        "token": "",
+        "org": "",
+        "bucket": "",
+        "measurement": ""
+    }
+}
