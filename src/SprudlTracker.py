@@ -37,7 +37,10 @@ fuelPoints = []
 
 try:
     if eControlCfg['enabled'] == True:
+        print("Parsing E-Control ...")
         fuelPoints += EControlParser.parse(eControlCfg)
+    else:
+        print("Skipping E-Control ...")
 except Exception as e:
     print('Exception while parsing E-Control:', e)
     print(traceback.format_exc())
@@ -46,7 +49,10 @@ except Exception as e:
 
 try:
     if iqCardCfg['enabled'] == True:
+        print("Parsing IQ Card ...")
         fuelPoints += IqCardParser.parse(iqCardCfg)
+    else:
+        print("Skipping IQ Card ...")
 except Exception as e:
     print('Exception while parsing IQ Card:', e)
     print(traceback.format_exc())
@@ -55,10 +61,13 @@ except Exception as e:
 
 try:
     if influxDBCfg['enabled'] == True:
+        print("Writing to InfluxDB ...")
         if len(fuelPoints) > 0:
             InfluxDBConnector.write_points(influxDBCfg, fuelPoints)
         else:
             print('WARNING: No fuel points collected!')
+    else:
+        print("Skipping InfluxDB ...")
 except Exception as e:
     print('Exception while writing points to InfluxDB:', e)
     print(traceback.format_exc())
