@@ -6,9 +6,9 @@ from FuelPoint import FuelPoint
 def parse(config):
 
     BASE_URL = 'https://netservice.iqcard.at/'
-    LOGIN_POST_URL = BASE_URL + 'de/login'
+    LOGIN_POST_URL = BASE_URL + 'de/Kunden?handler=SignInDb'
     LOGOUT_GET_URL = BASE_URL + 'de/logout'
-    PREISINFO_GET_URL = BASE_URL + 'de/netservice_preisinfo'
+    PREISINFO_GET_URL = BASE_URL + 'de/netservice/Preisinfo'
 
     # Create session to keep cookies
     sess = requests.Session()
@@ -23,11 +23,28 @@ def parse(config):
         print(f'Initial GET request returned status code {resp.status_code}')
         return []
 
+    req_verif_token = None
+
+    # Parse RequestVerificationToken
+    for line in resp.iter_lines(decode_unicode=True):
+        if '__RequestVerificationToken' in line:
+            line_parts = line.split('"')
+            for i in range(len(line_parts)):
+                if 'value' in line_parts[i]:
+                    req_verif_token = line_parts[i+1]
+                    break
+            if req_verif_token:
+                break
+
+    if not req_verif_token:
+        print('Could not parse RequestVerificationToken!')
+        return []
+
     # POST request with login credentials
     login_data = {
-        'BENUID': config['username'],
-        'PASSWT': config['password'],
-        'login-form-submit': 'login'
+        'Username': config['username'],
+        'Password': config['password'],
+        '__RequestVerificationToken': req_verif_token
     }
     resp = sess.post(LOGIN_POST_URL, data=login_data)
 
